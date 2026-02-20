@@ -7,21 +7,21 @@
                     <form @submit.prevent="submitForm" id="contactForm" class="contact-form">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input v-model="name" type="text" class="form-control" id="name" name="name" required>
                             <div class="invalid-feedback">
                                 Please provide your name.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input v-model="email" type="email" class="form-control" id="email" name="email" required>
                             <div class="invalid-feedback">
                                 Please provide a valid email address.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            <textarea v-model="message" class="form-control" id="message" name="message" rows="5" required></textarea>
                             <div class="invalid-feedback">
                                 Please provide a message.
                             </div>
@@ -106,6 +106,7 @@ const submitForm = async () => {
     isLoading.value = false;
     notyf.error("Failed to send message. Please try again.");
   } finally {
+    isLoading.value = false;
     // Reset reCAPTCHA after submission attempt
     if (window.grecaptcha) {
       window.grecaptcha.reset();
@@ -158,11 +159,10 @@ onMounted(() => {
       clearInterval(interval);
     }
   }, 1000); 
+});
 
-  onBeforeMount(() => {
-    clearInterval(interval);
-  });
-
+onBeforeMount(() => {
+  clearInterval(interval);
 });
 
 
