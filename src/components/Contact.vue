@@ -27,6 +27,8 @@
                             </div>
                         </div>
                         
+                        <div ref="recaptchaContainer" class="recaptcha-wrapper mb-3"></div>
+
                         <button 
                         type="submit"
                         class="btn btn-primary btn-submit"
@@ -36,7 +38,7 @@
                         </button>
                            
                     </form>
-                    <div ref="recaptchaContainer" class="mt-3 recaptcha-wrapper"></div>
+
                 </div>
             </div>
         </div>
@@ -107,10 +109,7 @@ const submitForm = async () => {
     notyf.error("Failed to send message. Please try again.");
   } finally {
     isLoading.value = false;
-    // Reset reCAPTCHA after submission attempt
-    if (window.grecaptcha) {
-      window.grecaptcha.reset();
-    }
+    resetRecaptcha();
   }
 };
 
@@ -152,18 +151,23 @@ function resetRecaptcha() {
   }
 }
 
-onMounted(() => {
-  const interval = setInterval(() => {
-    if (window.grecaptcha && window.grecaptcha.render) {
-      renderRecaptcha();
-      clearInterval(interval);
-    }
-  }, 1000); 
-});
 
-onBeforeMount(() => {
-  clearInterval(interval);
-});
+onMounted(() => {
+
+    const interval = setInterval(() => {
+
+        if(window.grecaptcha && window.grecaptcha.render) {
+            renderRecaptcha();
+            clearInterval(interval);
+        }
+
+    },100);
+
+    onBeforeMount(() => {
+        clearInterval(interval);
+    })
+})
+
 
 
 </script>
