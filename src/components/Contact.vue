@@ -4,7 +4,7 @@
             <h2 class="section-title">Contact</h2>
             <div class="row justify-content-center">
                 <div class="col-10 col-lg-6">
-                    <form id="contactForm" class="contact-form">
+                    <form @submit.prevent="submitForm" id="contactForm" class="contact-form">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
